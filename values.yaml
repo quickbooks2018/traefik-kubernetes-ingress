@@ -19,6 +19,7 @@ service:
     service.beta.kubernetes.io/aws-load-balancer-ssl-negotiation-policy: "ELBSecurityPolicy-TLS-1-2-2017-01"
     service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes-cluster=production"
     #service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: "sg-12345678"
+    #service.beta.kubernetes.io/aws-load-balancer-delete-protection: "true"
 
 ports:
   metrics:
