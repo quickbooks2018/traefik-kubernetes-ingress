@@ -75,3 +75,26 @@ globalArguments:
   - --api.insecure=true
   - --global.sendanonymoususage=false
   - --global.checknewversion=false
+
+additionalArguments:
+  - --global.checknewversion=false
+  - --api=true
+  - --api.dashboard=true
+  - --accesslog=true
+  - --accesslog.format=json
+  - --accesslog.fields.defaultmode=keep
+  - --accesslog.fields.headers.defaultmode=drop
+  - --log.level=info
+  - --entrypoints.web.address=:80
+  - --entrypoints.websecure.address=:443
+  - --entryPoints.traefik.address=:9000
+  - --entryPoints.metrics.address=:9100
+  - --entrypoints.web.http.redirections.entryPoint.to=websecure
+  - --entrypoints.web.http.redirections.entryPoint.scheme=https
+  - --entrypoints.web.http.redirections.entrypoint.permanent=true
+  - --ping
+  - --providers.kubernetesingress
+  - --providers.kubernetescrd
+  - --metrics.prometheus=true
+  - --metrics.prometheus.entryPoint=metrics
+  - --serversTransport.insecureSkipVerify=true
