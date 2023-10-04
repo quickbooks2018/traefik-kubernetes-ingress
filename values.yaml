@@ -1,0 +1,77 @@
+deployment:
+  replicas: 3
+ingressClass:
+  enabled: true
+  isDefaultClass: false
+  name: traefik-external
+  fallbackApiVersion: ""
+ingressRoute:
+  dashboard:
+    enabled: false
+service:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-internal: "false"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:us-east-1:164033467123:certificate/184368e4-f07c-4eee-b429-55a8e73911ac"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "60"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-negotiation-policy: "ELBSecurityPolicy-TLS-1-2-2017-01"
+    service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes-cluster=production"
+    #service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: "sg-12345678"
+
+ports:
+  metrics:
+    expose: false
+    exposedPort: 9100
+  traefik:
+    expose: false
+    exposedPort: 9000
+  web:
+    expose: true
+    exposedPort: 80
+    nodePort: 32080
+    port: 80
+    redirectTo: websecure
+  websecure:
+    expose: true
+    exposedPort: 443
+    nodePort: 32443
+    port: 443
+    tls:
+      enabled: false
+providers:
+  kubernetesCRD:
+    ingressClass: traefik-external
+    allowExternalNameServices: true
+    enabled: true
+  kubernetesIngress:
+    allowExternalNameServices: true
+    enabled: true
+    ingressEndpoint:
+      publishedService: traefik/traefik # This is the namespace and service name
+resources:
+  limits:
+    cpu: "2"
+    memory: 8Gi
+  requests:
+    cpu: 200m
+    memory: 128Mi
+securityContext:
+  capabilities:
+    add:
+      - NET_BIND_SERVICE
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  runAsGroup: 0
+  runAsNonRoot: false
+  runAsUser: 0
+
+rbac:
+  enabled: true
+
+globalArguments:
+  - --api.insecure=true
+  - --global.sendanonymoususage=false
+  - --global.checknewversion=false
