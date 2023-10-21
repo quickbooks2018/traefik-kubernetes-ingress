@@ -21,4 +21,9 @@ helm show all traefik/traefik --version 24.0.0
 helm -n traefik upgrade --install traefik --create-namespace traefik/traefik --version 24.0.0 --values=values.yaml --wait
 ```
 
+- GKE Cloudflare Traefik Ingress
+```bash
+helm -n traefik upgrade --install traefik --create-namespace traefik/traefik --version 24.0.0 --values=gke-values.yaml --wait
+```
+
 - Access Traefik Dashboard url http://localhost:8080/dashboard/ (read only web gui) http://localhost:46443/dashboard/#/
