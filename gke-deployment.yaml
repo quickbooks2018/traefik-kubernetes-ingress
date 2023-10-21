@@ -1,0 +1,56 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudgeeks-deployment
+  labels:
+    app: cloudgeeks
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cloudgeeks
+  template:
+    metadata:
+      labels:
+        app: cloudgeeks
+    spec:
+      containers:
+        - name: cloudgeeks
+          image: gcr.io/google-samples/hello-app-metrics:1.0
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudgeeks-service
+  labels:
+    app: cloudgeeks
+spec:
+  selector:
+    app: cloudgeeks
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: cloudgeeks-service-ingressroute
+  namespace: default
+  annotations:
+      kubernetes.io/ingress.class: "traefik-external"
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`gke.saqlainmushtaq.com`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: cloudgeeks-service
+      namespace: default
+      port: 80
