@@ -94,6 +94,14 @@ service:
   enabled: true
   type: LoadBalancer
 
+rbac:
+  enabled: true
+
+globalArguments:
+  - --api.insecure=true
+  - --global.sendanonymoususage=false
+  - --global.checknewversion=false
+
 additionalArguments:
  - --global.checknewversion=false
  - --api=true
