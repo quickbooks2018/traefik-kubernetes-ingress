@@ -32,7 +32,7 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.12/conf
 helm -n traefik upgrade --install traefik --create-namespace traefik/traefik --version 24.0.0 --values=gke-values.yaml --wait
 ```
 
-- metlab-config.yaml
+- metallb-config.yaml
 ```bash
 apiVersion: v1
 kind: ConfigMap
@@ -48,7 +48,7 @@ data:
       - 172.18.0.200-172.18.0.250
 ```
 ```bash
-kubectl apply -f metlab-config.yaml
+kubectl apply -f metallb-config.yaml
 ```
 
 - Access Traefik Dashboard url http://localhost:8080/dashboard/ (read only web gui) http://localhost:46443/dashboard/#/
