@@ -47,8 +47,8 @@ data:
       addresses:
       - 172.18.0.200-172.18.0.250
 ```
-
-- kubectl apply -f metlab-config.yaml
-
+```bash
+kubectl apply -f metlab-config.yaml
+```
 
 - Access Traefik Dashboard url http://localhost:8080/dashboard/ (read only web gui) http://localhost:46443/dashboard/#/
