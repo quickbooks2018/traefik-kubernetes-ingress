@@ -37,25 +37,34 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.12/conf
 ```bash
 kubectl api-resources | grep metal
 ```
-- metallb-config.yaml
+- Create IP Pool
 ```bash
-apiVersion: v1
-kind: ConfigMap
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
 metadata:
+  name: first-pool
   namespace: metallb-system
-  name: config
-data:
-  config: |
-    address-pools:
-    - name: default
-      protocol: layer2
-      addresses:
-      - 172.18.0.200-172.18.0.250
+spec:
+  addresses:
+  - 172.31.20.205/20
 ```
 ```bash
-kubectl apply -f metallb-config.yaml
+kubectl -n metallb-system apply -f pool-1.yml
 ```
-
+- Create L2Advertisement.yaml
+```bash
+kapiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: homelab-l2
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - first-pool
+```
+```bash
+kubectl apply -f L2Advertisement.yaml
+```
 - Sample Deployment
 ```bash
 apiVersion: v1
