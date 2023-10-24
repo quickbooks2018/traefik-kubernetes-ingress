@@ -37,7 +37,7 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.12/conf
 ```bash
 kubectl api-resources | grep metal
 ```
-- Create IP Pool
+- Create IPPool.yaml
 ```bash
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
