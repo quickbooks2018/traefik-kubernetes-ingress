@@ -46,7 +46,7 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-  - 18.118.7.244/32
+  - 172.18.255.200-172.18.255.250
 ```
 ```bash
 kubectl -n metallb-system apply -f pool-1.yml
