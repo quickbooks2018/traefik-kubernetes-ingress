@@ -28,7 +28,7 @@ helm -n traefik upgrade --install traefik --create-namespace traefik/traefik --v
 
 - Access Traefik Dashboard url http://localhost:8080/dashboard/ (read only web gui) http://localhost:46443/dashboard/#/
 
-- Kind MetalLb Installation
+- Kind MetalLb Installation https://kind.sigs.k8s.io/docs/user/loadbalancer/
 - https://github.com/metallb/metallb
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.12/config/manifests/metallb-native.yaml
