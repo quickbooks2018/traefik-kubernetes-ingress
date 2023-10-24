@@ -46,7 +46,7 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-  - 172.31.20.205/20
+  - 18.118.7.244/32
 ```
 ```bash
 kubectl -n metallb-system apply -f pool-1.yml
@@ -64,32 +64,4 @@ spec:
 ```
 ```bash
 kubectl apply -f L2Advertisement.yaml
-```
-- Sample Deployment
-```bash
-apiVersion: v1
-kind: Pod
-metadata:
-  name: nginx
-  labels:
-    app: nginx
-spec:
-  containers:
-  - name: nginx
-    image: nginx:1.14.2
-    ports:
-    - containerPort: 80
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-service
-spec:
-  selector:
-    app: nginx
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: LoadBalancer
 ```
