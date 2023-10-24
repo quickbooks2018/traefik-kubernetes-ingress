@@ -21,17 +21,22 @@ helm show all traefik/traefik --version 24.0.0
 helm -n traefik upgrade --install traefik --create-namespace traefik/traefik --version 24.0.0 --values=values.yaml --wait
 ```
 
-- Kind MetalLb Installation
-- https://github.com/metallb/metallb
-```bash
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.12/config/manifests/metallb-native.yaml
-```
-  
 - GKE Cloudflare Traefik Ingress
 ```bash
 helm -n traefik upgrade --install traefik --create-namespace traefik/traefik --version 24.0.0 --values=gke-values.yaml --wait
 ```
 
+- Access Traefik Dashboard url http://localhost:8080/dashboard/ (read only web gui) http://localhost:46443/dashboard/#/
+
+- Kind MetalLb Installation
+- https://github.com/metallb/metallb
+```bash
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.12/config/manifests/metallb-native.yaml
+```
+- kubernetes api-resources
+```bash
+kubectl api-resources | grep metal
+```
 - metallb-config.yaml
 ```bash
 apiVersion: v1
@@ -51,4 +56,31 @@ data:
 kubectl apply -f metallb-config.yaml
 ```
 
-- Access Traefik Dashboard url http://localhost:8080/dashboard/ (read only web gui) http://localhost:46443/dashboard/#/
+- Sample Deployment
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+```
