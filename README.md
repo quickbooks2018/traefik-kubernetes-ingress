@@ -53,7 +53,7 @@ kubectl -n metallb-system apply -f pool-1.yml
 ```
 - Create L2Advertisement.yaml
 ```bash
-kapiVersion: metallb.io/v1beta1
+apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
   name: homelab-l2
